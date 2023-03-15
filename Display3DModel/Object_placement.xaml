@@ -1,0 +1,111 @@
+﻿<UserControl
+     x:Name="ObjectPlacement" x:Class="Display3DModel.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Display3DModel"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="450" d:DesignWidth="800" Width="300" Height="674"  Background="#FFE2DFDF" Loaded="ObjectPlacement_Loaded">
+
+    <Grid>
+        <Label x:Name="movelbl" Content="Move :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.027,-0.02" Height="29" Width="56" FontSize="11"/>
+        <Label x:Name="moveXlbl" Content="X:" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.327,0.39" Width="27" Height="23" FontSize="11"/>
+        <Label x:Name="moveYlbl" Content="Y:" HorizontalAlignment="Left" Margin="58,38,0,0" VerticalAlignment="Top" Width="27" Height="23" RenderTransformOrigin="0.684,1.274" FontSize="11"/>
+        <TextBox x:Name="moveXtxt" HorizontalAlignment="Left" Height="23" Margin="85,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" PreviewTextInput="moveXtxt_PreviewTextInput" Text="0" TextChanged="moveXtxt_TextChanged"/>
+        <TextBox x:Name="moveYtxt" HorizontalAlignment="Left" Height="23" Margin="85,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" PreviewTextInput="moveYtxt_PreviewTextInput" Text="0" TextChanged="moveYtxt_TextChanged"/>
+        <Button x:Name="movebtn" Content="Move" HorizontalAlignment="Left" Margin="190,22,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.5,0.5" Height="32" Click="movebtn_Click" FontWeight="Bold" Background="#FF919191" BorderBrush="Black">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.634"/>
+                    <TranslateTransform X="-0.012"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Label x:Name="line1lbl" Content="_______________________________________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="0,61,0,0" VerticalAlignment="Top" Height="27" Width="300"/>
+        <Label x:Name="rotatelbl" Content="Rotate :" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.455,-0.095" Height="27" FontSize="11"/>
+        <Label x:Name="rotateXlbl" Content="X:" HorizontalAlignment="Left" Margin="58,98,0,0" VerticalAlignment="Top" Width="27" Height="23" RenderTransformOrigin="0.63,-0.06" FontSize="11"/>
+        <Label x:Name="rotateYlbl" Content="Y:" HorizontalAlignment="Left" Margin="58,126,0,0" VerticalAlignment="Top" Height="23" Width="27" RenderTransformOrigin="0.521,1.418" FontSize="11"/>
+        <TextBox x:Name="rotateXtxt" HorizontalAlignment="Left" Height="23" Margin="85,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="0" PreviewTextInput="rotateXtxt_PreviewTextInput" TextChanged="rotateXtxt_TextChanged" />
+        <TextBox x:Name="rotateYtxt" HorizontalAlignment="Left" Height="23" Margin="85,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="0" PreviewTextInput="rotateYtxt_PreviewTextInput" TextChanged="rotateYtxt_TextChanged" />
+        <Label x:Name="totateZlbl" Content="Z:" HorizontalAlignment="Left" Margin="58,154,0,0" VerticalAlignment="Top" Width="27" Height="23" RenderTransformOrigin="1.173,0.498" FontSize="11"/>
+        <TextBox x:Name="rotateZtxt" HorizontalAlignment="Left" Height="23" Margin="85,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="0" PreviewTextInput="rotateZtxt_PreviewTextInput" TextChanged="rotateZtxt_TextChanged"/>
+        <Label x:Name="totateAlbl" Content="Angle:" HorizontalAlignment="Left" Margin="36,177,0,0" VerticalAlignment="Top" Width="41" Height="28" RenderTransformOrigin="1.173,0.498" FontSize="11"/>
+        <TextBox x:Name="rotateAtxt" HorizontalAlignment="Left" Height="23" Margin="85,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="0" PreviewTextInput="rotateAtxt_PreviewTextInput" TextChanged="rotateAtxt_TextChanged"/>
+
+        <Label x:Name="line2lbl" Content="_______________________________________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="0,210,0,0" VerticalAlignment="Top" Height="27" Width="300"/>
+        <Label x:Name="multilbl" Content="Multiply :" HorizontalAlignment="Left" Margin="10,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.136,0.69" Width="75" FontSize="11"/>
+        <Label x:Name="muliplyCYtxt" Content="XY:" HorizontalAlignment="Left" Margin="58,237,0,0" VerticalAlignment="Top" Height="26" Width="27" RenderTransformOrigin="-0.312,0.654" FontSize="11"/>
+        <Label x:Name="MultiplyXlbl" Content="X:" HorizontalAlignment="Left" Margin="58,263,0,0" VerticalAlignment="Top" Width="27" Height="23" FontSize="11"/>
+        <Label x:Name="multiplyYtxt" Content="Y:" HorizontalAlignment="Left" Margin="58,296,0,0" VerticalAlignment="Top" Width="27" Height="23" FontSize="11"/>
+        <TextBox x:Name="multiplyXYtxt" HorizontalAlignment="Left" Height="23" Margin="85,242,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" PreviewTextInput="multiplyCYtxt_PreviewTextInput" TextChanged="multiplyXYtxt_TextChanged"/>
+        <TextBox x:Name="multiplyXtxt" HorizontalAlignment="Left" Height="23" Margin="85,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" PreviewTextInput="multiplyXtxt_PreviewTextInput" TextChanged="multiplyXtxt_TextChanged"/>
+        <TextBox x:Name="multiplyYtxt1" HorizontalAlignment="Left" Height="23" Margin="85,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" PreviewTextInput="multiplyYtxt1_PreviewTextInput" TextChanged="multiplyYtxt1_TextChanged"/>
+        <Button x:Name="Multiplybtn" Content="Multiply" HorizontalAlignment="Left" Margin="190,267,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.5,0.5" Height="32" Click="Multiplybtn_Click_1" FontWeight="Bold" Background="#FF919191" BorderBrush="Black">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.634"/>
+                    <TranslateTransform X="-0.012"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+
+        <Label x:Name="line3lbl" Content="_______________________________________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="0,324,0,0" VerticalAlignment="Top" Height="27" Width="300"/>
+        <Label x:Name="objectlistlbl" Content="Object List :" HorizontalAlignment="Left" Margin="10,351,0,0" VerticalAlignment="Top" FontSize="11"/>
+        <Button x:Name="part1hidebtn" Content="" HorizontalAlignment="Left" Margin="140,351,0,0" VerticalAlignment="Top" Width="30" Height="30" RenderTransformOrigin="2.012,0.654" Click="part1hidebtn_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/ShowOBJ.png" />
+            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="Black"  BorderThickness="1.5">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="part1deletebtn" Content="" HorizontalAlignment="Left" Margin="195,352,0,0" VerticalAlignment="Top" Width="30" Height="30" RenderTransformOrigin="2.012,0.654" Click="part1deletebtn_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/Delete.png"/>
+            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="Black"  BorderThickness="1.5">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="Rotatebtn" Content="Rotate" HorizontalAlignment="Left" Margin="190,136,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.5,0.5" Height="32" Click="Rotatebtn_Click" FontWeight="Bold" Background="#FF919191" BorderBrush="Black">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.634"/>
+                    <TranslateTransform X="-0.012"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+
+
+        <Button x:Name="part1color" Content="" HorizontalAlignment="Left" Margin="85,352,0,0" VerticalAlignment="Top" Width="30" Height="30" RenderTransformOrigin="0.5,0.5" Background="#FFABA000" Click="part1color_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="Black"  BorderThickness="1">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <ListBox x:Name="objectListBox" Margin="85,387,65,144.6" SelectionChanged="objectListBox_SelectionChanged">
+
+        </ListBox>
+        <Label x:Name="line4lbl" Content="_______________________________________________________________________________________________________________________________________________________" HorizontalAlignment="Left" Margin="0,534,0,0" VerticalAlignment="Top" Height="27" Width="300"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="240,441,0,0" VerticalAlignment="Top" Width="50" Height="88" Click="Button_Click_1"/>
+    </Grid>
+</UserControl>

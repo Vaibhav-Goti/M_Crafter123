@@ -1,0 +1,157 @@
+﻿<Window x:Class="Display3DModel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:helix="http://helix-toolkit.org/wpf"
+        xmlns:display3dmodel ="clr-namespace:Display3DModel"
+        xmlns:hx="http://helix-toolkit.org/wpf/SharpDX" xmlns:helix1="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        WindowStartupLocation="CenterScreen"
+        Title="M-Crafter 125" Height="700" Width="900"
+        HorizontalAlignment="Left" VerticalAlignment="Top"
+        MinHeight="700" MinWidth="887"
+        Icon="Resources/123.ico">
+
+    <Window.Resources>
+        <display3dmodel:BoundsConverter x:Key="BoundsConverter"></display3dmodel:BoundsConverter>
+        <Storyboard x:Key="BlinkAnimation" AutoReverse="True" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="1.0" To="0.0" Duration="0:0:0.5"/>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black"/>
+            <GradientStop Color="#FF6F6F6F" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid RenderTransformOrigin="0.5,0.5" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel  x:Name="optionpanel" Background="#FFE2DFDF" Grid.Row="1" Grid.Column="0" Margin="5">
+            <Button x:Name="Object_placement" Content="Object placement" Margin="6,10,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" Height="46" RenderTransformOrigin="0.451,1.224" BorderBrush="Black" FontWeight="Bold" FontSize="10" Grid.ColumnSpan="2" Click="Object_placement_Click"/>
+            <Button x:Name="Print_Setting" Content="Print Setting" Margin="6,5,1,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" RenderTransformOrigin="-0.309,1.083" Height="46" FontSize="10" FontWeight="Bold" BorderBrush="Black" Grid.ColumnSpan="2" Click="Print_Setting_Click"/>
+            <Button x:Name="Manual_Control" Content="Manual Control" Margin="6,5,-0.4,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" Height="46" FontSize="10" FontWeight="Bold" BorderBrush="Black" Grid.ColumnSpan="2" Click="Manual_Control_Click"/>
+            <Button x:Name="Machine_Setting" Content="Machine Setting" Margin="6,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" BorderBrush="Black" Height="52" FontSize="10" FontWeight="Bold" Grid.ColumnSpan="2" Click="Machine_Setting_Click"/>
+        </StackPanel>
+
+        <StackPanel x:Name="settingpanel" Background="#FFE2DFDF" Grid.Row="1" Grid.Column="2" Margin="5" Width="300">
+
+        </StackPanel>
+
+        <StackPanel x:Name="footerpanel" Background="#FFE2DFDF" Grid.Row="2" Grid.ColumnSpan="3" Orientation="Vertical">
+            <TextBlock x:Name="Xvaluetxt" Text="" Height="40" Margin="1027,0,102,0" />
+            <TextBlock x:Name="Yvaluetxt" Text="" Height="40" Margin="1087,-33,42,0" />
+            <Label Content="Print Progress:" Margin="10,-40,786.6,0" Height="27"/>
+            <ProgressBar Height="20" Margin="107,-40,665.6,0"/>
+            <Label Content="Laser Status :" Margin="771,-40,42.6,0" Height="26" HorizontalAlignment="Right"/>
+            <Label x:Name="Label1" Margin="851,-40,9.6,0" Loaded="Label1_Loaded_1" Height="35" Width="35" HorizontalAlignment="Right" >
+                <Image Height="30" Width="30"  HorizontalAlignment="Right" Source="Resources/LaserBlink.gif"/>
+
+            </Label>
+        </StackPanel>
+
+        <StackPanel x:Name="headerpanel" Background="#FF656565" Grid.ColumnSpan="3" Grid.Row="0" Orientation="Vertical">
+
+            <Button x:Name="connectbtn" Content="" HorizontalAlignment="Center" Margin="-180,3,0,0" VerticalAlignment="Top" Width="40" Height="35" RenderTransformOrigin="0.5,0.5" BorderBrush="White" BorderThickness="2" Grid.Column="1" Click="connectbtn_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/disconnect.png"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black"  BorderThickness="1.5">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="loadbtn" HorizontalAlignment="Center" Margin="377,-35,455.6,10" VerticalAlignment="Top" Width="40" Height="36" RenderTransformOrigin="0.5,0.5" Grid.Column="1" BorderThickness="2"  BorderBrush="White" Click="loadbtn_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/loadfile.png"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black"  BorderThickness="1.5">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="startstopbtn" HorizontalAlignment="Center" Margin="426,-46,405.6,10" VerticalAlignment="Top" Width="40" Height="36" RenderTransformOrigin="0.37,0.467" Grid.Column="1" BorderThickness="2"  BorderBrush="White" Click="startstopbtn_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/Start.png"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black"  BorderThickness="1.5">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button x:Name="stopbtn" Stylus.IsFlicksEnabled="False" Content="" HorizontalAlignment="Center" Margin="471,-46,350.6,10" VerticalAlignment="Top" Width="40" Height="36" BorderBrush="Black"  BorderThickness="3"  RenderTransformOrigin="0.542,0.689" Grid.Column="1" Click="stopbtn_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/Stop.png"/>
+                </Button.Background>
+                <!--<Button.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/Red-stop.png"/>
+                </Button.Background>-->
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black"  BorderThickness="1.5">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button x:Name="emergencybtn" Content="EMERGENCY STOP" HorizontalAlignment="Right" Margin="0,-44,44.8,10" VerticalAlignment="Top" Width="126" Height="34" BorderBrush="#FFADADAD" Background="#FFDD0505" Foreground="White" FontWeight="Bold" Grid.Column="2" Click="emergencybtn_Click">
+
+            </Button>
+        </StackPanel>
+
+        <StackPanel x:Name="viewerPanel" Background="#FFE2DFDF" Grid.Row="1" Grid.Column="1" Margin="1,5.2,1,5">
+            <TabControl x:Name="viewtab" Grid.Row="1" Grid.Column="1" Margin="5" Height="558">
+                <TabItem Header="3D View" Margin="0,-2,-11.8,-0.2">
+                    <Grid Background="#FFE5E5E5" Margin="0,0,0.4,1">
+                        <helix:HelixViewport3D x:Name="viewPort3d" IsViewCubeEdgeClicksEnabled="True" ShowCoordinateSystem="True"  MouseDown="viewPort3d_MouseDown" MouseMove="viewPort3d_MouseMove" Margin="0,0,-2,0" ZoomExtentsWhenLoaded="True" RenderTransformOrigin="0.487,0.498" MouseUp="viewPort3d_MouseUp">
+                            <helix:HelixViewport3D.DefaultCamera>
+                                <PerspectiveCamera FieldOfView="61" NearPlaneDistance="0.001" Position="10,10,10" LookDirection="0,0,-1" UpDirection="0,1,0" />
+                            </helix:HelixViewport3D.DefaultCamera>
+                            <helix:SunLight/>
+                            <!--<helix:GridLinesVisual3D/>-->
+                            <helix:BoundingBoxVisual3D  BoundingBox="{Binding SelectedObject, Converter={StaticResource BoundsConverter}}" Diameter="0.2"/>
+                        </helix:HelixViewport3D>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Layer View" Margin="12.8,-2,-13,0" HorizontalAlignment="Left" Width="73">
+                    <Grid Background="#FFE5E5E5">
+                        <Slider HorizontalAlignment="Left" Margin="0,504,0,0" VerticalAlignment="Top" Height="20" Width="419" Background="#FFA8A7A7" BorderBrush="Black" Foreground="Black"/>
+                        <Slider HorizontalAlignment="Left" Margin="181,242,-229.2,0" VerticalAlignment="Top" Height="20" Width="501" RenderTransformOrigin="0.5,0.5" Background="#FFA8A7A7" BorderBrush="Black" Foreground="Black">
+                            <Slider.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="90.00"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Slider.RenderTransform>
+                        </Slider>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+
+    </Grid>
+</Window>
