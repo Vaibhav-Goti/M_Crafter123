@@ -76,7 +76,13 @@ namespace Display3DModel
         bool isHelixViewPort3DUp = true;
 
         private PerspectiveCamera camera;
+        
+        private int _previousSelectedIndex = -1;
+        
+        private int _selectedModelIndex = -1;
 
+        private GeometryModel3D _selectedModel;
+        
         public static MainWindow main;
 
         public static string openfile;
@@ -354,19 +360,19 @@ namespace Display3DModel
                             }
                         }
                     }
-                    //// Call the DLL function
-                    //int LoadResult = SV_ObjLoad();
-                    //if (LoadResult != 1)
-                    //{
-                    //    STL.removemodel = _modelVisual;
-                    //    System.Windows.MessageBox.Show("Object loading...");
-                    //}
-                    //else
-                    //{
-                    //    System.Windows.MessageBox.Show("Error loading object.");
-                    //}
+                    // Call the DLL function
+                    int LoadResult = SV_ObjLoad();
+                    if (LoadResult != 1)
+                    {
+                        STL.removemodel = _modelVisual;
+                       System.Windows.MessageBox.Show("Object loading...");
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Error loading object.");
+                    }
 
-                    //System.Windows.MessageBox.Show("Object loaded and saved as ZIP file.");
+                    System.Windows.MessageBox.Show("Object loaded and saved as ZIP file.");
                 }
                 else
                 {
@@ -479,33 +485,6 @@ namespace Display3DModel
 
         private void viewPort3d_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //var hitResult = VisualTreeHelper.HitTest(viewPort3d, e.GetPosition(viewPort3d));
-            //if (hitResult != null && hitResult.VisualHit is ModelVisual3D visual3D)
-            //{
-            //    selectedModel = visual3D;
-
-            //    System.Windows.Media.Color selectedColor = System.Windows.Media.Color.FromArgb(100,200,200,40);
-            //    var brush = new SolidColorBrush(selectedColor);
-            //    Material material = MaterialHelper.CreateMaterial(brush);
-
-            //    if (selectedModel != null && selectedModel.Content is Model3DGroup model3dgroup)
-            //    {
-            //        foreach (var model in model3dgroup.Children)
-            //        {
-            //            if (model is GeometryModel3D geometryModel)
-            //            {
-            //                geometryModel.Material = material;
-            //                geometryModel.BackMaterial = material;
-            //            }
-            //        }
-            //    }
-
-            //    // Set the selected object to the one that was clicked on            
-            //    STL.removemodel = selectedModel;
-            //    STL.RotateSTLModel = selectedModel;
-            //    myUserControl.SelectedModel = selectedModel;
-            //}
-
             if (e.ClickCount == 2 && e.ChangedButton == MouseButton.Left)
             {
                 isLeftButtonDoubleClicked = true;
@@ -575,82 +554,12 @@ namespace Display3DModel
                     STL.removemodel = selectedModel;
                     STL.RotateSTLModel = selectedModel;
                     myUserControl.SelectedModel = selectedModel;
-               
-            
-
-
-
-            //// Find the index of the loaded object in the ListBox
-            //int selectedIndex = -1;
-            //string loadedObjectName = System.IO.Path.GetFileName(STL.filename);
-            //for (int i = 0; i < myUserControl.objectListBox.Items.Count; i++)
-            //{
-            //    string listBoxItemName = myUserControl.objectListBox.Items[i].ToString();
-            //    if (listBoxItemName == loadedObjectName)
-            //    {
-            //        selectedIndex = i;
-            //        break;
-            //    }
-            //}
-
-            //// Set the selected index of the ListBox to the index of the loaded object
-            //if (selectedIndex != -1)
-            //{
-            //    myUserControl.objectListBox.SelectedIndex = selectedIndex;
-            //    myUserControl.objectListBox.ScrollIntoView(selectedIndex);
-
-            //    // Change the background color of the selected ListBox item
-            //    var item = (ListBoxItem)myUserControl.objectListBox.ItemContainerGenerator.ContainerFromIndex(selectedIndex);
-            //    if (item != null)
-            //    {
-            //        item.Background = Brushes.DarkGray;
-            //    }
-            //}
                 }
             }
         }
 
         private void viewPort3d_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            //System.Windows.Point position = e.GetPosition(this); // this = viewPort3D
-            //double deltaX = position.X - _lastPosition.X;
-            //double deltaY = position.Y - _lastPosition.Y;
-            //_translate.OffsetX += deltaX;
-            //_translate.OffsetY -= deltaY;
-            //_lastPosition = position;
-
-            //Xvaluetxt.Text = "X: " + position.X;
-            //Yvaluetxt.Text = " Y: " + position.Y;
-
-
-
-            //if (isLeftButtonDoubleClicked && selectedModel != null && e.LeftButton == MouseButtonState.Pressed)
-            //{
-            //    if (selectedModel != null && e.LeftButton == MouseButtonState.Pressed)
-            //    {
-            //        // Convert the mouse position to a 3D point in the viewport's coordinate system
-            //        var position = e.GetPosition(viewPort3d);
-            //        var point3D = viewPort3d.FindNearestPoint(position);
-
-            //        // Move the selected model to the new position
-            //        var transform = selectedModel.Transform as TranslateTransform3D;
-            //        if (transform == null)
-            //        {
-            //            transform = new TranslateTransform3D();
-            //            selectedModel.Transform = transform;
-            //        }
-            //        if (point3D.HasValue)
-            //        {
-            //            transform.OffsetX = point3D.Value.X;
-            //            transform.OffsetY = point3D.Value.Y;
-            //            //transform.OffsetZ = point3D.Value.Z;
-            //        }
-            //    }
-            //}
-
-
-
-
             if (isLeftButtonDoubleClicked && selectedModel != null && e.LeftButton == MouseButtonState.Pressed)
             {
                 if (selectedModel != null && e.LeftButton == MouseButtonState.Pressed)
@@ -688,8 +597,6 @@ namespace Display3DModel
                         translateTransform.OffsetY = point3D.Value.Y;
                         // translateTransform.OffsetZ = point3D.Value.Z;
                     }
-                    //    }
-                    //}
                 }
             }
         }
@@ -720,33 +627,6 @@ namespace Display3DModel
 
         private void objectListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //// Get the selected index of the ListBox
-            //int selectedIndex = objectListBox.SelectedIndex;
-
-            //// Check if the selected index is within the bounds of the _modelGroup.Children collection
-            //if (selectedIndex >= 0 && selectedIndex < _modelGroup.Children.Count)
-            //{
-            //    // Get the selected GeometryModel3D from the _modelGroup.Children collection
-            //    GeometryModel3D selectedModel = _modelGroup.Children[selectedIndex] as GeometryModel3D;
-
-            //    // Set the material of the selected GeometryModel3D to a red color
-            //    selectedModel.Material = new DiffuseMaterial(Brushes.Red);
-
-            //    // Set the material of all other GeometryModel3D objects to their original color
-            //    foreach (GeometryModel3D model in _modelGroup.Children)
-            //    {
-            //        if (model != selectedModel)
-            //        {
-            //            model.Material = model.BackMaterial;
-            //        }
-            //    }
-
-            //    // Update the viewPort3d
-            //    viewPort3d.UpdateLayout();
-            //}
-
-
-            
             int selectedIndex = myUserControl.objectListBox.SelectedIndex;
 
             if (selectedIndex >= 0 && selectedIndex < _modelGroup.Children.Count)
@@ -865,68 +745,21 @@ namespace Display3DModel
             image.Width = 50; // set the size of the image as per your requirement
             image.Height = 50;
             Label1.Content = image;
-
-            //// Create a new Bitmap object from the GIF file
-            //System.Drawing.Bitmap image = new Bitmap(@"C:\Users\gotiv\OneDrive\Desktop\R.gif");
-
-            //// Set the BackgroundImage property of the button to the image
-            //b1.BackgroundImage = image;
         }
 
         private void Label1_Loaded_1(object sender, RoutedEventArgs e)
         {
-            //int result = SV_LaserStatus();
-            //if (result != 0)
-            //{
+            int result = SV_LaserStatus();
+            if (result != 0)
+            {
                 var blinkAnimation = (Storyboard)FindResource("BlinkAnimation");
                 var image = (Image)Label1.Content;
                 image.BeginStoryboard(blinkAnimation);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Laser is Off...");
-            //}
+            }
+            else
+            {
+                MessageBox.Show("Laser is Off...");
+            }
         }
-
-        private int _previousSelectedIndex = -1;
-        private int _selectedModelIndex = -1;
-
-        private GeometryModel3D _selectedModel;
-        private void objectListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-            //int selectedIndex = objectListBox.SelectedIndex;
-            //if (selectedIndex >= 0 && selectedIndex < objectListBox.Items.Count)
-            //{
-            //    string selectedObjectName = objectListBox.Items[selectedIndex].ToString();
-            //    GeometryModel3D selectedModel;
-            //    if (_modelDictionary.TryGetValue(selectedObjectName, out selectedModel))
-            //    {
-            //        // Set the material of the selected model to red
-            //        selectedModel.Material = new DiffuseMaterial(new SolidColorBrush(Colors.DarkGray));
-            //    }
-            //}
-       
-            //int selectedIndex = objectListBox.SelectedIndex;
-            //if (selectedIndex >= 0 && selectedIndex < objectListBox.Items.Count)
-            //{
-            //    string selectedObjectName = objectListBox.Items[selectedIndex].ToString();
-            //    GeometryModel3D selectedModel;
-            //    if (_modelDictionary.TryGetValue(selectedObjectName, out selectedModel))
-            //    {
-            //        // Restore the color of the previously selected model
-            //        if (_previouslySelectedModel != null)
-            //        {
-            //            _previouslySelectedModel.Material = _previouslySelectedModel.BackMaterial;
-            //        }
-
-            //        // Set the material of the newly selected model to dark gray
-            //        selectedModel.Material = new DiffuseMaterial(new SolidColorBrush(Colors.DarkGray));
-
-            //        // Update the previously selected model
-            //        _previouslySelectedModel = selectedModel;
-            //    }
-            //}
-        }
-        
     }
 }
